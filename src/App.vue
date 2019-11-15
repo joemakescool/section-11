@@ -57,13 +57,17 @@
                 <input
                         type="checkbox"
                         id="sendmail"
-                        value="SendMail"> Send Mail
+                        value="SendMail"
+                        v-model="sendMail"
+                > Send Mail
               </label>
               <label for="sendInfomail">
                 <input
                         type="checkbox"
                         id="sendInfomail"
-                        value="SendInfoMail"> Send Infomail
+                        value="SendInfoMail"
+                        v-model="sendMail"
+                > Send Info-mail
               </label>
             </div>
 
@@ -75,27 +79,37 @@
               <input
                       type="radio"
                       id="male"
-                      value="Male"> Male
+                      value="Male"
+                      v-model="gender"
+              > Male
             </label>
             <label for="female">
               <input
                       type="radio"
                       id="female"
-                      value="Female"> Female
+                      value="Female"
+                      v-model="gender"
+
+              > Female
             </label>
           </div>
         </div>
+
         <div class="row">
           <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 from-group">
             <label for="priority">Priority</label>
             <select
                     id="priority"
                     class="form-control">
-              <option></option>
+              <option v-for="priority in priorities" :key="priority.id"
+                :selected="priority === 'none'"
+              >{{ priority }}</option>
             </select>
           </div>
         </div>
+
         <hr>
+
         <div class="row">
           <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
             <button
@@ -112,13 +126,14 @@
               <h4>Your Data</h4>
             </div>
             <div class="panel-body">
+              <p>Mail things {{ sendMail }}</p>
               <p>Mail: {{ userData.email }}</p>
               <p>Password: {{ userData.password }}</p>
               <p>Age: {{ userData.age }}</p>
               <p style="white-space: pre">Message: {{ message }} </p>
               <p><strong>Send Mail?</strong></p>
               <ul>
-                <li></li>
+                <li v-for="mail in sendMail" :key="mail.id">{{ mail }}</li>
               </ul>
               <p>Gender:</p>
               <p>Priority:</p>
@@ -144,7 +159,10 @@ export default {
 
     },
     email:'',
-    message:''
+    message:'',
+    sendMail: [],
+    gender: 'Female',
+    priorities: ['high', 'medium', 'low']
 
   }),
   components: {
